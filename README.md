@@ -1,5 +1,7 @@
 # XaeroMapmerger
 
+[![CI](https://github.com/talamus/kotlin-xaero-mapmerger/actions/workflows/ci.yml/badge.svg)](https://github.com/talamus/kotlin-xaero-mapmerger/actions/workflows/ci.yml)
+
 Merges two Xaero's World Map save folders into one, so map data explored by two
 players can be combined. Targets save format **6.8** as written by
 _Xaero's World Map 1.44.2_ for _Minecraft 1.20.1_.
@@ -15,6 +17,8 @@ Requires JDK 21 and `kotlinc` (both installable via sdkman). No other dependenci
 ```bash
 ./build.sh    # produces self-contained XaeroMapmerger.jar
 ```
+
+Or grab a prebuilt jar from the [releases page](https://github.com/talamus/kotlin-xaero-mapmerger/releases).
 
 ## Usage
 

@@ -1,0 +1,41 @@
+name: Set up Kotlin compiler
+description: Downloads (and caches) the standalone kotlinc and puts it on PATH.
+
+inputs:
+  version:
+    description: Kotlin compiler version
+    required: false
+    default: '2.4.10'
+
+runs:
+  using: composite
+  steps:
+    - name: Cache kotlinc
+      id: cache
+      uses: actions/cache@v4
+      with:
+        path: ~/.kotlinc/${{ inputs.version }}
+        key: kotlinc-${{ runner.os }}-${{ inputs.version }}
+
+    - name: Download kotlinc
+      if: steps.cache.outputs.cache-hit != 'true'
+      shell: bash
+      env:
+        VERSION: ${{ inputs.version }}
+      run: |
+        set -euo pipefail
+        dest="$HOME/.kotlinc/$VERSION"
+        mkdir -p "$dest"
+        curl -fsSL -o /tmp/kotlin-compiler.zip \
+          "https://github.com/JetBrains/kotlin/releases/download/v$VERSION/kotlin-compiler-$VERSION.zip"
+        unzip -q /tmp/kotlin-compiler.zip -d /tmp/kotlinc-unpack
+        mv /tmp/kotlinc-unpack/kotlinc/* "$dest"/
+
+    - name: Add kotlinc to PATH
+      shell: bash
+      env:
+        VERSION: ${{ inputs.version }}
+      run: |
+        set -euo pipefail
+        chmod +x "$HOME/.kotlinc/$VERSION/bin"/*
+        echo "$HOME/.kotlinc/$VERSION/bin" >> "$GITHUB_PATH"
