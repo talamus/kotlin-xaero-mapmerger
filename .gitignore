@@ -1,3 +1,11 @@
+# Local and temp files
+.claude/
+*.bak
+out.txt
+Combined_*
+materials/
+example/
+
 # Compiled class file
 *.class
 
